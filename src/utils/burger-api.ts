@@ -1,5 +1,4 @@
 import { setCookie, getCookie } from './cookie';
-
 import type { TIngredient, TOrder, TUser } from './types';
 
 const URL = process.env.BURGER_API_URL;
@@ -221,7 +220,7 @@ export const resetPasswordApi = (data: {
       return Promise.reject(toApiError(data));
     });
 
-type TUserResponse = TServerResponse<{ user: TUser }>;
+ export type TUserResponse = TServerResponse<{ user: TUser }>;
 
 export const getUserApi = (): Promise<TUserResponse> =>
   fetchWithRefresh<TUserResponse>(`${URL}/auth/user`, {
