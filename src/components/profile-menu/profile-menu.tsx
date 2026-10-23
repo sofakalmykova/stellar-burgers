@@ -10,7 +10,7 @@ export const ProfileMenu = (): React.JSX.Element => {
   const handleLogout = async (): Promise<void> => {
     // TODO: Разлогинить пользователя
     await dispatch(logout());
-    navigate('/login', { replace: true })
+    navigate('/login', { replace: true });
   };
 
   return <ProfileMenuUI handleLogout={handleLogout} pathname={pathname} />;

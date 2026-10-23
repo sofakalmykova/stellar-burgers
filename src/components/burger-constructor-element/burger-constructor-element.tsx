@@ -10,17 +10,17 @@ export const BurgerConstructorElement = memo(function BurgerConstructorElement({
 }: BurgerConstructorElementProps): React.JSX.Element {
   const dispatch = useDispatch();
   const handleMoveDown = (): void => {
-    dispatch(moveDown(ingredient.id))
+    dispatch(moveDown(ingredient.id));
     // TODO
   };
 
   const handleMoveUp = (): void => {
-    dispatch(moveUp(ingredient.id))
+    dispatch(moveUp(ingredient.id));
     // TODO
   };
 
   const handleClose = (): void => {
-    dispatch(removeIngredient(ingredient._id))
+    dispatch(removeIngredient(ingredient.id));
     // TODO
   };
 

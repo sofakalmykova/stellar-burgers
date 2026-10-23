@@ -5,23 +5,21 @@ import type { TOrder } from '@/utils/types';
 
 export const submitOrder = createAsyncThunk(
   'burgerConstructor/submitOrder',
-  async(_,{ getState }) => {
+  async (_, { getState }) => {
     const state = getState() as RootState;
-    const items = state.burgerConstructor;
     const ingredientIds: string[] = [];
-    if (items.bun) {
-      for (let i = 0; i < items.bun.count; i++) {
-        ingredientIds.push(items.bun._id);
-      }
+    if (state.burgerConstructor.bun) {
+      ingredientIds.push(state.burgerConstructor.bun._id);
+      ingredientIds.push(state.burgerConstructor.bun._id);
     }
-    items.ingredients.forEach((i) => {
-      for (let j = 0; j < i.count; j++) {
-        ingredientIds.push(i._id);
-      }
+    state.burgerConstructor.ingredients.forEach((ing) => {
+      ingredientIds.push(ing._id);
     });
-const response = await orderBurgerApi(ingredientIds);
+
+    const response = await orderBurgerApi(ingredientIds);
     return response.order;
-  })
+  }
+);
 
 interface TOrderState {
   isOrdering: boolean;
@@ -39,9 +37,10 @@ export const orderSlice = createSlice({
   name: 'order',
   initialState,
   reducers: {
-   resetLastOrder: (state) => {
+    resetLastOrder: (state) => {
       state.lastOrder = null;
-  }},
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(submitOrder.pending, (state) => {
@@ -62,5 +61,4 @@ export const orderSlice = createSlice({
 export default orderSlice.reducer;
 export const selectIsOrdering = (state: RootState) => state.order.isOrdering;
 export const selectLastOrder = (state: RootState) => state.order.lastOrder;
-export const selectOrderError = (state: RootState) => state.order.error;
 export const { resetLastOrder } = orderSlice.actions;

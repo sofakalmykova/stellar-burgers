@@ -1,7 +1,7 @@
-import type { TOrder } from "@/utils/types";
+import type { TOrder } from '@/utils/types';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getFeedsApi } from "@/utils/burger-api";
-import type { RootState } from "../store";
+import { getFeedsApi } from '@/utils/burger-api';
+import type { RootState } from '../store';
 
 export interface TFeedState {
   orders: TOrder[];
@@ -19,11 +19,9 @@ const initialState: TFeedState = {
   error: null,
 };
 
-export const fetchFeed = createAsyncThunk('feed/fetch', 
-    async() => {
-        return await getFeedsApi()
-    }
-)
+export const fetchFeed = createAsyncThunk('feed/fetch', async () => {
+  return await getFeedsApi();
+});
 
 const feedSlice = createSlice({
   name: 'feed',
@@ -47,7 +45,7 @@ const feedSlice = createSlice({
         state.error = 'Ошибка загрузки ленты';
       });
   },
-})
+});
 
 export const feedReducer = feedSlice.reducer;
 export const selectFeedOrders = (state: RootState) => state.feed.orders;

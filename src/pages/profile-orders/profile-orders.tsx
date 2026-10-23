@@ -6,10 +6,10 @@ import { fetchUserOrders } from '@/services/slices/userOrder-slice';
 import { useEffect } from 'react';
 export const ProfileOrders = (): React.JSX.Element => {
   /** TODO: взять переменную из стора */
-  const dispatch = useDispatch(); 
-  
+  const dispatch = useDispatch();
+
   const orders: TOrder[] = useSelector(selectUserOrders);
-useEffect(() => {
+  useEffect(() => {
     if (!orders || orders.length === 0) {
       dispatch(fetchUserOrders());
     }

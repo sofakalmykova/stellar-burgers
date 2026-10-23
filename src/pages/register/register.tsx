@@ -12,13 +12,11 @@ export const Register = (): React.JSX.Element => {
   const navigate = useNavigate();
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-     const result = await dispatch(registerUser({ name, email, password }));
-      if (registerUser.fulfilled.match(result)) {
-      // Успешная регистрация → на главную
+    const result = await dispatch(registerUser({ name, email, password }));
+    if (registerUser.fulfilled.match(result)) {
       navigate('/');
     }
   };
- 
 
   return (
     <RegisterUI

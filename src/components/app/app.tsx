@@ -1,18 +1,19 @@
 import { AppHeader, Modal, OrderInfo, IngredientDetails } from '@components';
-import { ConstructorPage,
-   Feed, 
-   Login,  
-   Register,
-   ForgotPassword,
-   ResetPassword,
-  Profile, 
-ProfileOrders,
-NotFound404, 
+import {
+  ConstructorPage,
+  Feed,
+  Login,
+  Register,
+  ForgotPassword,
+  ResetPassword,
+  Profile,
+  ProfileOrders,
+  NotFound404,
 } from '@pages';
 
 import { Preloader } from '@ui';
-import { Routes, Route, useLocation, useNavigate, Navigate} from 'react-router-dom';
-import {useEffect, type ReactElement} from 'react'
+import { Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';
+import { useEffect, type ReactElement } from 'react';
 import type { AppContentProps } from './type';
 import type { TIngredient } from '@utils-types';
 import { useDispatch, useSelector } from '../../services/store';
@@ -33,15 +34,13 @@ const App = (): React.JSX.Element => {
   const ingredients: TIngredient[] = useSelector(selectIngredients);
   const isIngredientsLoading = useSelector(selectIngredientsLoading);
   const ingredientsError = useSelector(selectIngredientsError);
-  console.log (ingredients)
-console.log('🥒 Ingredients: текущее состояние:', useSelector((state: any) => state.ingredients?.ingredients));
-  useEffect(()=> {
+  useEffect(() => {
     dispatch(fetchIngredients());
   }, [dispatch]);
 
   useEffect(() => {
-  dispatch(fetchUser());
-}, [dispatch]);
+    dispatch(fetchUser());
+  }, [dispatch]);
 
   return (
     <div className={styles.app}>
@@ -90,7 +89,10 @@ type ProtectedRouteProps = {
   children: ReactElement;
 };
 
-export const ProtectedRoute = ({ onlyUnAuth = false,  children }: ProtectedRouteProps) => {
+export const ProtectedRoute = ({
+  onlyUnAuth = false,
+  children,
+}: ProtectedRouteProps) => {
   const location = useLocation();
   const isAuthChecked = useSelector(selectIsAuthChecked);
   const user = useSelector(selectUser);
@@ -104,7 +106,7 @@ export const ProtectedRoute = ({ onlyUnAuth = false,  children }: ProtectedRoute
   if (onlyUnAuth && user) {
     return <Navigate to="/" replace />;
   }
-   return children;
+  return children;
 };
 const OrderModalWithNumber = () => {
   const { number } = useParams<{ number: string }>();
@@ -128,47 +130,94 @@ const RouteComponent = (): React.JSX.Element => {
         <Route path="/" element={<ConstructorPage />} />
         <Route path="/feed" element={<Feed />} />
         <Route path="/feed/:number" element={<OrderInfo />} />
-        <Route path="/ingredients/:id" element={
-          <>
-          <h2 className="text text_type_main-large mb-4">Детали ингредиента</h2>
-          <IngredientDetails />
-          </>
-          } />
-        <Route path="/profile/orders/:number" element={<ProtectedRoute ><OrderInfo /></ProtectedRoute>} />
-        <Route path="/login" element={<ProtectedRoute onlyUnAuth><Login /></ProtectedRoute>} />
-        <Route path="/register" element={<ProtectedRoute onlyUnAuth><Register /></ProtectedRoute>} />
-        <Route path="/forgot-password" element={<ProtectedRoute onlyUnAuth><ForgotPassword /></ProtectedRoute>} />
-        <Route path="/reset-password" element={<ProtectedRoute onlyUnAuth><ResetPassword /></ProtectedRoute>} />
-        <Route path="/profile" element={<ProtectedRoute ><Profile /></ProtectedRoute>} />
-        <Route path="/profile/orders" element={<ProtectedRoute ><ProfileOrders /></ProtectedRoute>} />
+        <Route
+          path="/ingredients/:id"
+          element={
+            <>
+              <h2 className="text text_type_main-large mb-4">Детали ингредиента</h2>
+              <IngredientDetails />
+            </>
+          }
+        />
+        <Route
+          path="/profile/orders/:number"
+          element={
+            <ProtectedRoute>
+              <OrderInfo />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <ProtectedRoute onlyUnAuth>
+              <Login />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <ProtectedRoute onlyUnAuth>
+              <Register />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/forgot-password"
+          element={
+            <ProtectedRoute onlyUnAuth>
+              <ForgotPassword />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reset-password"
+          element={
+            <ProtectedRoute onlyUnAuth>
+              <ResetPassword />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile/orders"
+          element={
+            <ProtectedRoute>
+              <ProfileOrders />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<NotFound404 />} />
       </Routes>
       {backgroundLocation && (
-  <Routes>
-    <Route
-      path="/feed/:number"
-      element={
-        <OrderModalWithNumber/>
-      }
-    />
-     <Route
-      path="/ingredients/:id"
-      element={
-        <Modal title="Детали ингредиента" onClose={() => navigate(-1)}>
-          <IngredientDetails />
-        </Modal>
-      }
-    />
-    <Route
-      path="/profile/orders/:number"
-      element={
-        <ProtectedRoute>
-          <OrderModalWithNumber/>
-        </ProtectedRoute>
-      }
-    />
-  </Routes>
-)}
+        <Routes>
+          <Route path="/feed/:number" element={<OrderModalWithNumber />} />
+          <Route
+            path="/ingredients/:id"
+            element={
+              <Modal title="Детали ингредиента" onClose={() => navigate(-1)}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path="/profile/orders/:number"
+            element={
+              <ProtectedRoute>
+                <OrderModalWithNumber />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      )}
     </>
   );
 };

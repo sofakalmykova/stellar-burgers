@@ -8,10 +8,9 @@ export const ForgotPassword = (): React.JSX.Element => {
   const [error, setError] = useState<Error | null>(null);
 
   const navigate = useNavigate();
-  
-  const handleSubmit = async(e: SyntheticEvent): Promise<void> => {
+
+  const handleSubmit = async (e: SyntheticEvent): Promise<void> => {
     e.preventDefault();
-    //await dispatch(forgotPassword({ email }));
     setError(null);
     void forgotPasswordApi({ email })
       .then(() => {
