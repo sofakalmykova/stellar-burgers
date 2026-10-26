@@ -9,7 +9,7 @@ export const ForgotPassword = (): React.JSX.Element => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: SyntheticEvent): Promise<void> => {
+  const handleSubmit = (e: SyntheticEvent): void => {
     e.preventDefault();
     setError(null);
     void forgotPasswordApi({ email })

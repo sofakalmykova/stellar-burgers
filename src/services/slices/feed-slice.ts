@@ -1,15 +1,16 @@
-import type { TOrder } from '@/utils/types';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getFeedsApi } from '@/utils/burger-api';
-import type { RootState } from '../store';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-export interface TFeedState {
+import type { RootState } from '../store';
+import type { TOrder } from '@/utils/types';
+
+export type TFeedState = {
   orders: TOrder[];
   total: number;
   totalToday: number;
   isLoading: boolean;
   error: string | null;
-}
+};
 
 const initialState: TFeedState = {
   orders: [],
@@ -48,8 +49,8 @@ const feedSlice = createSlice({
 });
 
 export const feedReducer = feedSlice.reducer;
-export const selectFeedOrders = (state: RootState) => state.feed.orders;
-export const selectFeedTotal = (state: RootState) => state.feed.total;
-export const selectFeedTotalToday = (state: RootState) => state.feed.totalToday;
-export const selectFeedIsLoading = (state: RootState) => state.feed.isLoading;
-export const selectFeedError = (state: RootState) => state.feed.error;
+export const selectFeedOrders = (state: RootState): TOrder[] => state.feed.orders;
+export const selectFeedTotal = (state: RootState): number => state.feed.total;
+export const selectFeedTotalToday = (state: RootState): number => state.feed.totalToday;
+export const selectFeedIsLoading = (state: RootState): boolean => state.feed.isLoading;
+export const selectFeedError = (state: RootState): string | null => state.feed.error;

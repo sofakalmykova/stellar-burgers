@@ -1,10 +1,11 @@
-import { Preloader, OrderInfoUI } from '@ui';
-import { useMemo, useEffect } from 'react';
-import { useSelector, useDispatch } from '@/services/store';
-import type { TIngredient } from '@utils-types';
-import { useParams } from 'react-router-dom';
 import { selectIngredients } from '@/services/slices/ingridients-slice';
 import { fetchOrderById, selectOrderInfo } from '@/services/slices/orderInfo-slice';
+import { useSelector, useDispatch } from '@/services/store';
+import { Preloader, OrderInfoUI } from '@ui';
+import { useMemo, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+
+import type { TIngredient } from '@utils-types';
 export const OrderInfo = (): React.JSX.Element => {
   /** TODO: взять переменные orderData и ingredients из стора */
   const { number } = useParams<{ number: string }>();
@@ -15,7 +16,7 @@ export const OrderInfo = (): React.JSX.Element => {
   const ingredients: TIngredient[] = useSelector(selectIngredients);
   useEffect(() => {
     if (number) {
-      dispatch(fetchOrderById(number));
+      void dispatch(fetchOrderById(number));
     }
   }, [dispatch, number]);
 

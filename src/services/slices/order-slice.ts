@@ -1,5 +1,6 @@
 import { orderBurgerApi } from '@/utils/burger-api';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
 import type { RootState } from '../store';
 import type { TOrder } from '@/utils/types';
 
@@ -21,11 +22,11 @@ export const submitOrder = createAsyncThunk(
   }
 );
 
-interface TOrderState {
+type TOrderState = {
   isOrdering: boolean;
   lastOrder: TOrder | null;
   error: string | null;
-}
+};
 
 const initialState: TOrderState = {
   isOrdering: false,
@@ -53,12 +54,13 @@ export const orderSlice = createSlice({
       })
       .addCase(submitOrder.rejected, (state, action) => {
         state.isOrdering = false;
-        state.error = action.error.message || 'Ошибка оформления заказа';
+        state.error = action.error.message ?? 'Ошибка оформления заказа';
       });
   },
 });
 
 export default orderSlice.reducer;
-export const selectIsOrdering = (state: RootState) => state.order.isOrdering;
-export const selectLastOrder = (state: RootState) => state.order.lastOrder;
+export const selectIsOrdering = (state: RootState): boolean => state.order.isOrdering;
+export const selectLastOrder = (state: RootState): TOrder | null =>
+  state.order.lastOrder;
 export const { resetLastOrder } = orderSlice.actions;

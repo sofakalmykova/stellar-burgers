@@ -1,5 +1,5 @@
-import { AppHeaderUI } from '@ui';
 import { useSelector } from '@/services/store';
+import { AppHeaderUI } from '@ui';
 
 export const AppHeader = (): React.JSX.Element => {
   /* TODO: Получите имя пользователя из хранилища */

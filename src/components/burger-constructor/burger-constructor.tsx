@@ -1,16 +1,21 @@
-import { BurgerConstructorUI } from '@ui';
-import { useMemo } from 'react';
-import { selectConstructorState } from '@/services/slices/constructor-slice';
-import type { TConstructorIngredient, TConstructorState, TOrder } from '@utils-types';
-import { useSelector, useDispatch } from '@/services/store';
+import {
+  selectConstructorState,
+  clearConstructor,
+} from '@/services/slices/constructor-slice';
 import {
   submitOrder,
   selectIsOrdering,
   selectLastOrder,
+  resetLastOrder,
 } from '@/services/slices/order-slice';
+import { useSelector, useDispatch } from '@/services/store';
+import { BurgerConstructorUI } from '@ui';
+import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { resetLastOrder } from '@/services/slices/order-slice';
-import { clearConstructor } from '@/services/slices/constructor-slice';
+
+import type { RootState } from '@/services/store';
+import type { TConstructorIngredient, TConstructorState, TOrder } from '@utils-types';
+
 export const BurgerConstructor = (): React.JSX.Element | null => {
   /** TODO: Взять переменные constructorItems, orderRequest и orderModalData из стора */
   const constructorItems: TConstructorState = useSelector(selectConstructorState);
@@ -18,8 +23,8 @@ export const BurgerConstructor = (): React.JSX.Element | null => {
   const orderModalData: TOrder | null = useSelector(selectLastOrder);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user);
-  const onOrderClick = async (): Promise<void> => {
+  const user = useSelector((state: RootState) => state.user.user);
+  const onOrderClick = (): void => {
     if (!constructorItems.bun || orderRequest) return;
     // TODO: Оформить заказ
 
@@ -27,8 +32,14 @@ export const BurgerConstructor = (): React.JSX.Element | null => {
       navigate('/login', { state: { from: '/constructor' } });
       return;
     }
-    await dispatch(submitOrder()).unwrap();
-    dispatch(clearConstructor());
+    void dispatch(submitOrder())
+      .unwrap()
+      .then(() => {
+        dispatch(clearConstructor());
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const closeOrderModal = (): void => {

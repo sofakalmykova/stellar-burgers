@@ -1,5 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getOrderByNumberApi } from '@/utils/burger-api';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
 import type { RootState } from '../store';
 import type { TOrder } from '@/utils/types';
 
@@ -13,11 +14,11 @@ export const fetchOrderById = createAsyncThunk(
   }
 );
 
-interface TOrderInfoState {
+type TOrderInfoState = {
   order: TOrder | null;
   isLoading: boolean;
   error: string | null;
-}
+};
 
 const initialState: TOrderInfoState = {
   order: null,
@@ -48,4 +49,5 @@ const orderInfoSlice = createSlice({
 
 export const orderInfoReducer = orderInfoSlice.reducer;
 
-export const selectOrderInfo = (state: RootState) => state.orderInfo.order;
+export const selectOrderInfo = (state: RootState): TOrder | null =>
+  state.orderInfo.order;

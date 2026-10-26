@@ -1,4 +1,3 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   getUserApi,
   loginUserApi,
@@ -6,10 +5,13 @@ import {
   registerUserApi,
   updateUserApi,
 } from '@/utils/burger-api';
-import type { TLoginData, TRegisterData /*TUserResponse*/ } from '@/utils/burger-api';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
 import { setCookie, deleteCookie } from '../../utils/cookie';
+
 import type { TUser } from '../../utils/types';
 import type { RootState } from '../store';
+import type { TLoginData, TRegisterData /*TUserResponse*/ } from '@/utils/burger-api';
 
 type TUserState = {
   isAuthChecked: boolean;
@@ -61,7 +63,11 @@ export const logout = createAsyncThunk('user/logout', async () => {
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    markAuthChecked: (state) => {
+      state.isAuthChecked = true;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUser.fulfilled, (state, action) => {
@@ -97,10 +103,13 @@ const userSlice = createSlice({
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.error = action.error.message ?? 'Ошибка регистрации';
+        state.isAuthChecked = true;
       });
   },
 });
 
 export default userSlice.reducer;
-export const selectUser = (state: RootState) => state.user.user;
-export const selectIsAuthChecked = (state: RootState) => state.user.isAuthChecked;
+export const selectUser = (state: RootState): TUser | null => state.user.user;
+export const selectIsAuthChecked = (state: RootState): boolean =>
+  state.user.isAuthChecked;
+export const { markAuthChecked } = userSlice.actions;

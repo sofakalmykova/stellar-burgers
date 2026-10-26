@@ -1,3 +1,9 @@
+import {
+  fetchUser,
+  selectUser,
+  selectIsAuthChecked,
+  markAuthChecked,
+} from '@/services/slices/user-slice';
 import { AppHeader, Modal, OrderInfo, IngredientDetails } from '@components';
 import {
   ConstructorPage,
@@ -10,24 +16,31 @@ import {
   ProfileOrders,
   NotFound404,
 } from '@pages';
-
 import { Preloader } from '@ui';
-import { Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { useEffect, type ReactElement } from 'react';
-import type { AppContentProps } from './type';
-import type { TIngredient } from '@utils-types';
-import { useDispatch, useSelector } from '../../services/store';
+import {
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+  Navigate,
+  useParams,
+} from 'react-router-dom';
+
 import {
   fetchIngredients,
   selectIngredients,
   selectIngredientsLoading,
   selectIngredientsError,
 } from '../../services/slices/ingridients-slice';
+import { useDispatch, useSelector } from '../../services/store';
+
+import type { AppContentProps } from './type';
+import type { TIngredient } from '@utils-types';
+
 import '../../index.css';
-import { fetchUser } from '@/services/slices/user-slice';
+
 import styles from './app.module.css';
-import { selectUser, selectIsAuthChecked } from '@/services/slices/user-slice';
-import { useParams } from 'react-router-dom';
 const App = (): React.JSX.Element => {
   const dispatch = useDispatch();
 
@@ -35,11 +48,15 @@ const App = (): React.JSX.Element => {
   const isIngredientsLoading = useSelector(selectIngredientsLoading);
   const ingredientsError = useSelector(selectIngredientsError);
   useEffect(() => {
-    dispatch(fetchIngredients());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(fetchUser());
+    void dispatch(fetchIngredients());
+    const hasAuthToken = !!document.cookie
+      .split(';')
+      .find((c) => c.trim().startsWith('accessToken='));
+    if (hasAuthToken) {
+      void dispatch(fetchUser());
+    } else {
+      dispatch(markAuthChecked());
+    }
   }, [dispatch]);
 
   return (
@@ -88,45 +105,62 @@ type ProtectedRouteProps = {
   onlyUnAuth?: boolean;
   children: ReactElement;
 };
-
+type TLocationState = {
+  from?: {
+    pathname: string;
+  };
+};
 export const ProtectedRoute = ({
   onlyUnAuth = false,
   children,
-}: ProtectedRouteProps) => {
+}: ProtectedRouteProps): React.JSX.Element => {
   const location = useLocation();
   const isAuthChecked = useSelector(selectIsAuthChecked);
   const user = useSelector(selectUser);
-
+  const state = location.state as TLocationState | null;
+  console.log(user);
   if (!isAuthChecked) {
-    return null;
+    return <Preloader />;
   }
+
+  if (onlyUnAuth && user) {
+    const from = state?.from?.pathname ?? '/';
+    return <Navigate to={from} replace />;
+  }
+
   if (!onlyUnAuth && !user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
-  if (onlyUnAuth && user) {
-    return <Navigate to="/" replace />;
-  }
+
   return children;
 };
-const OrderModalWithNumber = () => {
+const OrderModalWithNumber = (): React.JSX.Element | null => {
   const { number } = useParams<{ number: string }>();
   const navigate = useNavigate();
 
   if (!number) return null;
 
   return (
-    <Modal title={`#${number}`} onClose={() => navigate(-1)}>
+    <Modal
+      title={`#${number}`}
+      onClose={() => {
+        void navigate(-1);
+      }}
+    >
       <OrderInfo />
     </Modal>
   );
 };
+type LocationState = {
+  background?: Location;
+};
 const RouteComponent = (): React.JSX.Element => {
   const location = useLocation();
-  const backgroundLocation = location.state?.background;
+  const backgroundLocation = (location.state as LocationState)?.background;
   const navigate = useNavigate();
   return (
     <>
-      <Routes location={backgroundLocation || location}>
+      <Routes location={backgroundLocation ?? location}>
         <Route path="/" element={<ConstructorPage />} />
         <Route path="/feed" element={<Feed />} />
         <Route path="/feed/:number" element={<OrderInfo />} />
@@ -134,7 +168,11 @@ const RouteComponent = (): React.JSX.Element => {
           path="/ingredients/:id"
           element={
             <>
-              <h2 className="text text_type_main-large mb-4">Детали ингредиента</h2>
+              <div style={{ textAlign: 'center', width: '100%' }}>
+                <h2 className="text text_type_main-large  detailHeader">
+                  Детали ингредиента
+                </h2>
+              </div>
               <IngredientDetails />
             </>
           }
@@ -203,7 +241,12 @@ const RouteComponent = (): React.JSX.Element => {
           <Route
             path="/ingredients/:id"
             element={
-              <Modal title="Детали ингредиента" onClose={() => navigate(-1)}>
+              <Modal
+                title="Детали ингредиента"
+                onClose={() => {
+                  void navigate(-1);
+                }}
+              >
                 <IngredientDetails />
               </Modal>
             }

@@ -1,10 +1,11 @@
+import { selectIngredients } from '@/services/slices/ingridients-slice';
+import { useSelector } from '@/services/store';
 import { OrderCardUI } from '@ui';
 import { memo, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useSelector } from '@/services/store';
+
 import type { OrderCardProps } from './type';
 import type { TIngredient } from '@utils-types';
-import { selectIngredients } from '@/services/slices/ingridients-slice';
 const maxIngredients = 6;
 
 export const OrderCard = memo(function OrderCard({

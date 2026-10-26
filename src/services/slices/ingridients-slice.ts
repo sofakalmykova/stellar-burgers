@@ -1,12 +1,13 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getIngredientsApi } from '@/utils/burger-api';
-import type { TIngredient } from '@utils-types';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
 import type { SerializedError } from '@reduxjs/toolkit';
-interface IIngredientsState {
+import type { TIngredient } from '@utils-types';
+type IIngredientsState = {
   ingredients: TIngredient[];
   isLoading: boolean;
   error: SerializedError | null;
-}
+};
 
 const initialState: IIngredientsState = {
   ingredients: [],
@@ -36,9 +37,12 @@ const ingredientsSlice = createSlice({
 });
 export default ingredientsSlice.reducer;
 
-export const selectIngredients = (state: { ingredients: IIngredientsState }) =>
-  state.ingredients.ingredients;
-export const selectIngredientsLoading = (state: { ingredients: IIngredientsState }) =>
-  state.ingredients.isLoading;
-export const selectIngredientsError = (state: { ingredients: IIngredientsState }) =>
-  state.ingredients.error;
+export const selectIngredients = (state: {
+  ingredients: IIngredientsState;
+}): TIngredient[] => state.ingredients.ingredients;
+export const selectIngredientsLoading = (state: {
+  ingredients: IIngredientsState;
+}): boolean => state.ingredients.isLoading;
+export const selectIngredientsError = (state: {
+  ingredients: IIngredientsState;
+}): SerializedError | null => state.ingredients.error;

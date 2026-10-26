@@ -1,13 +1,14 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getOrdersApi } from '@/utils/burger-api';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
 import type { RootState } from '../store';
 import type { TOrder } from '@/utils/types';
 
-interface TUserOrdersState {
+type TUserOrdersState = {
   orders: TOrder[];
   isLoading: boolean;
   error: string | null;
-}
+};
 
 const initialState: TUserOrdersState = {
   orders: [],
@@ -40,6 +41,6 @@ const userOrdersSlice = createSlice({
   },
 });
 export const userOrderReducer = userOrdersSlice.reducer;
-export const selectUserOrders = (state: RootState) => state.userOrders.orders;
-export const selectUserOrdersIsLoading = (state: RootState) =>
+export const selectUserOrders = (state: RootState): TOrder[] => state.userOrders.orders;
+export const selectUserOrdersIsLoading = (state: RootState): boolean =>
   state.userOrders.isLoading;

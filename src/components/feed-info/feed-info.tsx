@@ -1,4 +1,3 @@
-import { FeedInfoUI } from '@ui';
 import {
   selectFeedOrders,
   selectFeedTotal,
@@ -6,8 +5,10 @@ import {
   selectFeedIsLoading,
   selectFeedError,
 } from '@/services/slices/feed-slice';
-import type { TOrder } from '@utils-types';
 import { useSelector } from '@/services/store';
+import { FeedInfoUI } from '@ui';
+
+import type { TOrder } from '@utils-types';
 const getOrders = (orders: TOrder[], status: string): number[] =>
   orders
     .filter((item) => item.status === status)
