@@ -20,10 +20,12 @@ export const AppHeaderUI = ({ userName }: TAppHeaderUIProps): React.JSX.Element 
             `${styles.link} ${isActive ? styles.link_active : ''}`
           }
         >
-          <>
-            <BurgerIcon type={'primary'} />
-            <p className="text text_type_main-default ml-2 mr-10">Конструктор</p>
-          </>
+          {({ isActive }) => (
+            <>
+              <BurgerIcon type={isActive ? 'primary' : 'secondary'} />
+              <p className="text text_type_main-default ml-2 mr-10">Конструктор</p>
+            </>
+          )}
         </NavLink>
         <NavLink
           to="/feed"
@@ -31,10 +33,12 @@ export const AppHeaderUI = ({ userName }: TAppHeaderUIProps): React.JSX.Element 
             `${styles.link} ${isActive ? styles.link_active : ''}`
           }
         >
-          <>
-            <ListIcon type={'primary'} />
-            <p className="text text_type_main-default ml-2">Лента заказов</p>
-          </>
+          {({ isActive }) => (
+            <>
+              <ListIcon type={isActive ? 'primary' : 'secondary'} />
+              <p className="text text_type_main-default ml-2">Лента заказов</p>
+            </>
+          )}
         </NavLink>
       </div>
       <div className={styles.logo}>
@@ -49,12 +53,14 @@ export const AppHeaderUI = ({ userName }: TAppHeaderUIProps): React.JSX.Element 
           `${styles.link_position_last} ${styles.link} ${isActive ? styles.link_active : ''}`
         }
       >
-        <div className={styles.link_position_last}>
-          <ProfileIcon type={'primary'} />
-          <p className="text text_type_main-default ml-2">
-            {userName ?? 'Личный кабинет'}
-          </p>
-        </div>
+        {({ isActive }) => (
+          <div className={styles.link_position_last}>
+            <ProfileIcon type={isActive ? 'primary' : 'secondary'} />
+            <p className="text text_type_main-default ml-2">
+              {userName ?? 'Личный кабинет'}
+            </p>
+          </div>
+        )}
       </NavLink>
     </nav>
   </header>
