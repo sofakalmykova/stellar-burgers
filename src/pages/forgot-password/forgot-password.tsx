@@ -2,7 +2,7 @@ import { forgotPasswordApi } from '@api';
 import { ForgotPasswordUI } from '@ui-pages';
 import { useState, type SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+//mport { forgotPassword,selectForgotPasswordStatus } from '@/services/slices/user-slice';
 export const ForgotPassword = (): React.JSX.Element => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState<Error | null>(null);
@@ -11,7 +11,6 @@ export const ForgotPassword = (): React.JSX.Element => {
 
   const handleSubmit = (e: SyntheticEvent): void => {
     e.preventDefault();
-
     setError(null);
     void forgotPasswordApi({ email })
       .then(() => {
