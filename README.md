@@ -37,3 +37,13 @@
 	},
 ```
 /*https://norma.education-services.ru/api*/
+ test('должен записать HAR-файл', async ({ page }) => {
+  // Начинаем запись HAR
+  await page.routeFromHAR('tests/mocks/ingredients.har', {
+    url: '**/api/ingredients', 
+    update: false, 
+  });
+  await page.goto('/');
+   await expect(page.getByText('Краторная булка N-200i').first()).toBeVisible();
+   await expect(page.getByText('Соус Spicy-X').first()).toBeVisible();
+});
