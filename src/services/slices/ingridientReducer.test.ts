@@ -36,7 +36,7 @@ describe('Редьюсер слайса ingredientsReducer', () => {
 
   test('pending: включает загрузку и сбрасывает ошибку', () => {
     const prevState = { ingredients: [], isLoading: false, error: { message: 'oops' } };
-    const state = ingredientsReducer(prevState, { type: fetchIngredients.pending.type });
+    const state = ingredientsReducer(prevState, fetchIngredients.pending('requestId'));
     expect(state.isLoading).toBe(true);
     expect(state.error).toBeNull();
   });

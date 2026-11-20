@@ -1,1 +1,73 @@
-{"success":true,"name":"Флюоресцентный люминесцентный био-марсианский бургер","order":{"_id":"6afed335d52992ca5ffe744f","number":1188,"name":"Флюоресцентный люминесцентный био-марсианский бургер","ingredients":[{"_id":"6acd6b8163765e241c0bd9ec","name":"Флюоресцентная булка R2-D3","type":"bun","proteins":44,"fat":26,"carbohydrates":85,"calories":643,"price":988,"image":"https://norma.ffapi.ru/images/bun-01.png","image_mobile":"https://norma.ffapi.ru/images/bun-01-mobile.png","image_large":"https://norma.ffapi.ru/images/bun-01-large.png"},{"_id":"6acd6b8163765e241c0bd9ec","name":"Флюоресцентная булка R2-D3","type":"bun","proteins":44,"fat":26,"carbohydrates":85,"calories":643,"price":988,"image":"https://norma.ffapi.ru/images/bun-01.png","image_mobile":"https://norma.ffapi.ru/images/bun-01-mobile.png","image_large":"https://norma.ffapi.ru/images/bun-01-large.png"},{"_id":"6acd6b8163765e96530bd9f0","name":"Биокотлета из марсианской Магнолии","type":"main","proteins":420,"fat":142,"carbohydrates":242,"calories":4242,"price":424,"image":"https://norma.ffapi.ru/images/meat-01.png","image_mobile":"https://norma.ffapi.ru/images/meat-01-mobile.png","image_large":"https://norma.ffapi.ru/images/meat-01-large.png"},{"_id":"6acd6b8163765e407c0bd9ed","name":"Филе Люминесцентного тетраодонтимформа","type":"main","proteins":44,"fat":26,"carbohydrates":85,"calories":643,"price":988,"image":"https://norma.ffapi.ru/images/meat-03.png","image_mobile":"https://norma.ffapi.ru/images/meat-03-mobile.png","image_large":"https://norma.ffapi.ru/images/meat-03-large.png"}],"owner":{"name":"test","email":"test@yandex.ru","createdAt":"2026-11-19T10:42:52.997Z","updatedAt":"2026-11-19T10:42:52.997Z"},"status":"done","createdAt":"2026-11-19T10:45:09.589Z","updatedAt":"2026-11-19T10:45:09.592Z","price":3388}}
+{
+  "success": true,
+  "name": "Флюоресцентный люминесцентный био-марсианский бургер",
+  "order": {
+    "_id": "6afed335d52992ca5ffe744f",
+    "number": 1188,
+    "name": "Флюоресцентный люминесцентный био-марсианский бургер",
+    "ingredients": [
+      {
+        "_id": "6acd6b8163765e241c0bd9ec",
+        "name": "Флюоресцентная булка R2-D3",
+        "type": "bun",
+        "proteins": 44,
+        "fat": 26,
+        "carbohydrates": 85,
+        "calories": 643,
+        "price": 988,
+        "image": "https://norma.ffapi.ru/images/bun-01.png",
+        "image_mobile": "https://norma.ffapi.ru/images/bun-01-mobile.png",
+        "image_large": "https://norma.ffapi.ru/images/bun-01-large.png"
+      },
+      {
+        "_id": "6acd6b8163765e241c0bd9ec",
+        "name": "Флюоресцентная булка R2-D3",
+        "type": "bun",
+        "proteins": 44,
+        "fat": 26,
+        "carbohydrates": 85,
+        "calories": 643,
+        "price": 988,
+        "image": "https://norma.ffapi.ru/images/bun-01.png",
+        "image_mobile": "https://norma.ffapi.ru/images/bun-01-mobile.png",
+        "image_large": "https://norma.ffapi.ru/images/bun-01-large.png"
+      },
+      {
+        "_id": "6acd6b8163765e96530bd9f0",
+        "name": "Биокотлета из марсианской Магнолии",
+        "type": "main",
+        "proteins": 420,
+        "fat": 142,
+        "carbohydrates": 242,
+        "calories": 4242,
+        "price": 424,
+        "image": "https://norma.ffapi.ru/images/meat-01.png",
+        "image_mobile": "https://norma.ffapi.ru/images/meat-01-mobile.png",
+        "image_large": "https://norma.ffapi.ru/images/meat-01-large.png"
+      },
+      {
+        "_id": "6acd6b8163765e407c0bd9ed",
+        "name": "Филе Люминесцентного тетраодонтимформа",
+        "type": "main",
+        "proteins": 44,
+        "fat": 26,
+        "carbohydrates": 85,
+        "calories": 643,
+        "price": 988,
+        "image": "https://norma.ffapi.ru/images/meat-03.png",
+        "image_mobile": "https://norma.ffapi.ru/images/meat-03-mobile.png",
+        "image_large": "https://norma.ffapi.ru/images/meat-03-large.png"
+      }
+    ],
+    "owner": {
+      "name": "Тестовый пользователь",
+      "email": "test@example.com",
+      "createdAt": "2026-11-19T10:42:52.997Z",
+      "updatedAt": "2026-11-19T10:42:52.997Z"
+    },
+    "status": "done",
+    "createdAt": "2026-11-19T10:45:09.589Z",
+    "updatedAt": "2026-11-19T10:45:09.592Z",
+    "price": 3388
+  }
+}

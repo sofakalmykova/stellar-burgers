@@ -19,16 +19,12 @@ test.describe('add ingredients to constructor works correctly', function () {
   test('булка попадает в конструктор дважды (верх и низ)', async ({ page }) => {
     await openWithMock(page);
     await addBtnFor(page, bun).click();
-    await expect(constructorArea(page).getByText(bun)).toHaveCount(
-      2
-    );
+    await expect(constructorArea(page).getByText(bun)).toHaveCount(2);
   });
 
   test('добавление начинки в конструктор', async ({ page }) => {
     await openWithMock(page);
     await addBtnFor(page, ingridient).click();
-    await expect(
-      constructorArea(page).getByText(ingridient).first()
-    ).toBeVisible();
+    await expect(constructorArea(page).getByText(ingridient).first()).toBeVisible();
   });
 });

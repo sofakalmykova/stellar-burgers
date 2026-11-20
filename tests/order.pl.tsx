@@ -7,7 +7,8 @@ import {
   orderNumber,
   addBtnFor,
   ingridient,
-  ingridientNumberTwo
+  ingridientNumberTwo,
+  constructorArea,
 } from './helpers';
 
 test.describe('Модальное окно заказа', () => {
@@ -20,12 +21,10 @@ test.describe('Модальное окно заказа', () => {
   });
 
   test('бургер собирается: булка и начинка попадают в конструктор', async ({ page }) => {
-    await expect(page.getByText(bun).first()).toBeVisible();
+    await expect(constructorArea(page).getByText(bun)).toHaveCount(2);
+    await expect(constructorArea(page).getByText(ingridient).first()).toBeVisible();
     await expect(
-      page.getByText(ingridient).first()
-    ).toBeVisible();
-    await expect(
-      page.getByText(ingridientNumberTwo).first()
+      constructorArea(page).getByText(ingridientNumberTwo).first()
     ).toBeVisible();
   });
 
@@ -44,7 +43,13 @@ test.describe('Модальное окно заказа', () => {
   test('после оформления заказа конструктор пустеет', async ({ page }) => {
     await page.getByRole('button', { name: 'Оформить заказ' }).click();
     await expect(modalPortal(page).getByText(String(orderNumber))).toBeVisible();
-    await expect(page.locator('.constructor-element')).toHaveCount(0);
+    await expect(constructorArea(page).getByText(bun, { exact: true })).toHaveCount(0);
+    await expect(
+      constructorArea(page).getByText(ingridient, { exact: true })
+    ).toHaveCount(0);
+    await expect(
+      constructorArea(page).getByText(ingridientNumberTwo, { exact: true })
+    ).toHaveCount(0);
   });
 
   test('модальное окно закрывается по крестику', async ({ page }) => {
